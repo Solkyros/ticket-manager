@@ -6,8 +6,8 @@ const User = require("../models/user");
 //@desc Register a user
 //@route POST /api/users/register
 const registerUser = asyncHandler(async (req, res) => {
-  const { username, email, password } = req.body;
-  if (!username || !email || !password) {
+  const { email, password } = req.body;
+  if (!email || !password) {
     res.status(400);
     throw new Error("All fields are mandatory!");
   }
@@ -21,7 +21,6 @@ const registerUser = asyncHandler(async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   console.log("Hashed Password: ", hashedPassword);
   const user = await User.create({
-    username,
     email,
     password: hashedPassword,
   });
@@ -50,7 +49,6 @@ const loginUser = asyncHandler(async (req, res) => {
     const accessToken = jwt.sign(
       {
         user: {
-          username: user.username,
           email: user.email,
           id: user.id,
         },
@@ -58,7 +56,8 @@ const loginUser = asyncHandler(async (req, res) => {
       process.env.ACCESS_TOKEN_SECERT,
       { expiresIn: "15m" }
     );
-    res.status(200).json({ accessToken });
+    // res.status(200).json({ accessToken });
+    res.cookie('token', accessToken).json(user);
   } else {
     res.status(401);
     throw new Error("email or password is not valid");

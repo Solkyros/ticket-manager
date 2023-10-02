@@ -38,6 +38,7 @@ const Lock = styled(Avatar)(({ theme }) => ({
   backgroundColor: theme.palette.secondary.main,
 }));
 function Authenticate() {
+
    const [signIn, setSignIn] = useState(true);
   return (
     <RootContainer container>
