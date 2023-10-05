@@ -11,10 +11,6 @@ connectDb();
 const app = express();
 const port = process.env.PORT || 3001;
 app.use(express.json());
-app.use(function(req, res, next) {
-  res.setHeader('"Access-Control-Allow-Origin"', process.env.CLIENT_URL || 3000);
-  next();
-});
 app.use(cors({
   credentials: true,
   origin: process.env.CLIENT_URL || 3000
