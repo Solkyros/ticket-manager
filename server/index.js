@@ -11,10 +11,10 @@ connectDb();
 const app = express();
 const port = process.env.PORT || 3001;
 app.use(express.json());
-// app.use(cors({
-//   credentials: true,
-//   origin: port
-// }));
+app.use(cors({
+  credentials: true,
+  origin: port
+}));
 app.use(cookieParser());
 app.use(express.urlencoded({extended: false}));
 app.use('/api/projects', projectRoutes); //to use the project routes
