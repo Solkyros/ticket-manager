@@ -1,12 +1,25 @@
-import { Box, Button, Link, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  Link,
+  OutlinedInput,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useState } from "react";
 import api from "api/service";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "context/auth-context";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const Form = styled("form")(({ theme }) => ({
-  width: "100%", // Fix IE 11 issue.
+  width: "100%",
   marginTop: theme.spacing(1),
   display: "flex",
   flexDirection: "column",
@@ -20,11 +33,18 @@ const LinkButton = styled(Link)({
 });
 function Signin(props) {
   const { goToSignIn } = props;
+  const { login } = useAuth();
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({
     email: "",
     password: "",
   });
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   const loginUser = async (e) => {
     e.preventDefault();
     const { email, password } = data;
@@ -33,7 +53,8 @@ function Signin(props) {
         email,
         password,
       });
-      navigate('/');
+      login({ data: data });
+      navigate("/");
       toast.success("Login Successful. Welcome Back!");
     } catch (err) {
       toast.error(err.response.data.message);
@@ -60,16 +81,35 @@ function Signin(props) {
           autoFocus
           onChange={handleChange}
         />
-        <TextField
+        <FormControl
           variant="outlined"
-          margin="normal"
-          required
           fullWidth
-          name="password"
-          label="Password"
-          type="password"
+          required
+          margin="normal"
           onChange={handleChange}
-        />
+        >
+          <InputLabel htmlFor="outlined-adornment-password">
+            Password
+          </InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-password"
+            name="password"
+            label="Password"
+            type={showPassword ? "text" : "password"}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </FormControl>
         <Submit
           type="submit"
           variant="contained"

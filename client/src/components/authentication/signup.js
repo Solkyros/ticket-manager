@@ -1,12 +1,26 @@
-import { Box, Button, Link, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  FormHelperText,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  Link,
+  OutlinedInput,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useState } from "react";
 import api from "api/service";
 import toast from "react-hot-toast";
+import { VisibilityOff, Visibility } from "@mui/icons-material";
+import { useAuth } from "context/auth-context";
+import { useNavigate } from "react-router-dom";
 const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 );
-
 const Form = styled("form")(({ theme }) => ({
   width: "100%",
   marginTop: theme.spacing(1),
@@ -22,12 +36,20 @@ const LinkButton = styled(Link)({
 });
 function Signup(props) {
   const { goToSignIn } = props;
+  const { login } = useAuth();
+  const navigate = useNavigate();
   const [submitClicked, setSubmitClicked] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({
     email: "",
     password: "",
     password2: "",
   });
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   const registerUser = async (e) => {
     e.preventDefault();
     setSubmitClicked(true);
@@ -43,6 +65,12 @@ function Signup(props) {
         email,
         password,
       });
+      await api.post("/api/users/login", {
+        email,
+        password,
+      });
+      login({ data: data });
+      navigate("/");
       toast.success("Account created. Welcome!");
     } catch (err) {
       toast.error(err.response.data.message);
@@ -80,30 +108,68 @@ function Signup(props) {
             submitClicked && !emailRegex.test(data.email) ? "Invalid email" : ""
           }
         />
-        <TextField
+        <FormControl
           variant="outlined"
-          margin="normal"
-          required
           fullWidth
-          name="password"
-          label="Password"
-          type="password"
+          required
+          margin="normal"
           onChange={handleChange}
-        />
-        <TextField
+        >
+          <InputLabel htmlFor="outlined-adornment-password">
+            Password
+          </InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-password"
+            name="password"
+            label="Password"
+            type={showPassword ? "text" : "password"}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </FormControl>
+        <FormControl
           variant="outlined"
-          margin="normal"
-          required
           fullWidth
-          name="password2"
-          label="Re-enter Password"
-          type="password"
+          required
+          margin="normal"
           onChange={handleChange}
           error={submitClicked && checkPasswords()}
-          helperText={
-            submitClicked && checkPasswords() ? "Passwords do not match" : ""
-          }
-        />
+        >
+          <InputLabel htmlFor="outlined-adornment-password2">
+            Re-enter Password
+          </InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-password2"
+            name="password2"
+            label="Re-enter Password"
+            type={showPassword ? "text" : "password"}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+          <FormHelperText>
+            {submitClicked && checkPasswords() ? "Passwords do not match" : ""}
+          </FormHelperText>
+        </FormControl>
         <Submit
           type="submit"
           variant="contained"

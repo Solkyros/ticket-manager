@@ -1,4 +1,5 @@
 const express = require('express');
+const projectRoutes = require('./routes/project-routes');
 const ticketRoutes = require('./routes/ticket-routes');
 const userRoutes = require('./routes/user-routes');
 const errorHandler = require('./middleware/error-handler');
@@ -15,7 +16,8 @@ app.use(express.json());
 //   origin: port
 // }));
 app.use(cookieParser());
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({extended: false}));
+app.use('/api/projects', projectRoutes); //to use the project routes
 app.use('/api/tickets', ticketRoutes); //to use the ticket routes
 app.use('/api/users', userRoutes); //to use the user routes
 

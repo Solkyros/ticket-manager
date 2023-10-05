@@ -19,13 +19,10 @@ const registerUser = asyncHandler(async (req, res) => {
 
   //Hash password
   const hashedPassword = await bcrypt.hash(password, 10);
-  console.log("Hashed Password: ", hashedPassword);
   const user = await User.create({
     email,
     password: hashedPassword,
   });
-
-  console.log(`User created ${user}`);
   if (user) {
     res.status(201).json({ _id: user.id, email: user.email });
   } else {
@@ -57,7 +54,7 @@ const loginUser = asyncHandler(async (req, res) => {
       { expiresIn: "15m" }
     );
     // res.status(200).json({ accessToken });
-    res.cookie('token', accessToken).json(user);
+    res.cookie("token", accessToken).json(user);
   } else {
     res.status(401);
     throw new Error("email or password is not valid");
@@ -70,4 +67,17 @@ const currentUser = asyncHandler(async (req, res) => {
   res.json(req.user);
 });
 
-module.exports = { registerUser, loginUser, currentUser };
+//@desc Logout current user
+//@route GET /api/users/logout
+const logout = asyncHandler(async (req, res) => {
+  res.clearCookie("token");
+  res.send("Cookie cleared");
+});
+
+//@desc Get all users
+//@route GET /api/users
+const allUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({}, 'email');
+  res.status(200).json(users);
+});
+module.exports = { registerUser, loginUser, currentUser, logout, allUsers };

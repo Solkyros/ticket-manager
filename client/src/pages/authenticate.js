@@ -3,7 +3,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { styled } from "@mui/material/styles";
 import BackgroundImage from "../assets/squares.jpg";
 import Signup from "components/authentication/signup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Signin from "components/authentication/signin";
 
 const RootContainer = styled(Grid)({
@@ -33,16 +33,19 @@ const FormContainer = styled("div")(({ theme }) => ({
 }));
 const Lock = styled(Avatar)(({ theme }) => ({
   margin: theme.spacing(1),
-  height:'60px',
-  width:'60px',
+  height: "60px",
+  width: "60px",
   backgroundColor: theme.palette.secondary.main,
 }));
-function Authenticate() {
+function Authenticate({ title }) {
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
 
-   const [signIn, setSignIn] = useState(true);
+  const [signIn, setSignIn] = useState(true);
   return (
     <RootContainer container>
-      <Image item xs={false} sm={4} md={7} lg={9}/>
+      <Image item xs={false} sm={4} md={7} lg={9} />
       <Grid
         item
         xs={12}
@@ -55,14 +58,14 @@ function Authenticate() {
       >
         <FormContainer>
           <Lock>
-            <LockOutlinedIcon fontSize="large"/>
+            <LockOutlinedIcon fontSize="large" />
           </Lock>
-         { signIn ? 
-          <Signin goToSignIn={setSignIn}/>
-          :
-          <Signup goToSignIn={setSignIn}/>
-         }
-         <Footer>
+          {signIn ? (
+            <Signin goToSignIn={setSignIn} />
+          ) : (
+            <Signup goToSignIn={setSignIn} />
+          )}
+          <Footer>
             Image by{" "}
             <Link href="https://www.freepik.com/free-vector/background-pixel-rain-abstract_6148364.htm#page=8&query=patterns%20software&position=41&from_view=search&track=ais">
               Freepik

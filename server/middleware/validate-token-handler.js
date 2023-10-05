@@ -6,7 +6,6 @@ const validateToken = asyncHandler(async (req, res, next) => {
   // let authHeader = req.headers.Authorization || req.headers.authorization;
   // if (authHeader && authHeader.startsWith("Bearer")) {
   //   token = authHeader.split(" ")[1];
-  console.log(req.cookies);
   const {token} = req.cookies;
   if (token) {
     jwt.verify(token, process.env.ACCESS_TOKEN_SECERT, (err, obj) => {
