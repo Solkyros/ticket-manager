@@ -13,6 +13,7 @@ const router = express.Router();
 const port = process.env.PORT || 3001;
 router.use(
   cors({
+    origin: process.env.CLIENT_URL,
     credentials: true,
     origin: port,
   })
