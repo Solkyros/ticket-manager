@@ -13,7 +13,7 @@ const port = process.env.PORT || 3001;
 app.use(express.json());
 app.use(cors({
   credentials: true,
-  origin: port
+  origin: process.env.CLIENT_URL || 3000
 }));
 app.use(cookieParser());
 app.use(express.urlencoded({extended: false}));
