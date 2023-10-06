@@ -168,7 +168,7 @@ function Home({ title }) {
                     />
                   </ListItemButton>
                 </ListItem>
-                {i !== projectsFiltered.length - 1 && <Divider />}
+                {i !== tickets.length - 1 && <Divider />}
               </Box>
             ))}
           </List>

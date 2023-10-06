@@ -159,7 +159,7 @@ Feel free to explore the codebase for more details and customization options.
 
 | Dashboard                           | Project                | Ticket |
 | ----------------------------------- | --------------------------------- | --------------------------------- |
-| ![Dashboard](/dashboard.png) | ![Project Management](/projects.png) | ![Ticket Management](/tickets.png) |
+| ![Dashboard](./screenshots/dashboard.png) | ![Project Management](./screenshots/projects.png) | ![Ticket Management](./screenshots/tickets.png) |
 | Description: This screenshot shows the user's dashboard displaying project and ticket statistics. | Description: This screenshot shows the project management interface where users can create and manage projects. | Description: This screenshot displays the ticket management interface where users can create, update, and delete tickets. |
 
 ## Contributing
