@@ -69,7 +69,12 @@ export default function Dialog(props) {
 
   return (
     <MuiDialog open={open} onClose={handleClose}>
-      <form onSubmit={(e) => handleSave(e, form)}>
+      <form
+        onSubmit={(e) => {
+          setForm(blankForm);
+          handleSave(e, form);
+        }}
+      >
         <DialogTitle>Ticket</DialogTitle>
         <DialogContent>
           <DialogContentText>
