@@ -1,4 +1,4 @@
-const Ticket = require("../../models/ticket");
+const Ticket = require("../models/ticket");
 const asyncHanlder = require("express-async-handler");
 
 // @desc Get all tickets for user

@@ -1,4 +1,4 @@
-const Project = require("../../models/project");
+const Project = require("../models/project");
 const asyncHanlder = require("express-async-handler");
 
 // @desc Get all projects associated to user's email
