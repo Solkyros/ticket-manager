@@ -11,12 +11,12 @@ const validateToken = require("../middleware/validate-token-handler");
 
 const router = express.Router();
 // const port = process.env.PORT || 3001;
-router.use(
-  cors({
-    credentials: true,
-    origin: process.env.CLIENT_URL || 3000,
-  })
-);
+// router.use(
+//   cors({
+//     credentials: true,
+//     origin: process.env.CLIENT_URL || 3000,
+//   })
+// );
 router.post("/register", registerUser);
 
 router.post("/login", loginUser);

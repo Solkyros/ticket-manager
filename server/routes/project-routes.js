@@ -10,12 +10,12 @@ const {
 // const cors = require("cors");
 const validateToken = require("../middleware/validate-token-handler");
 // const port = process.env.PORT || 3001;
-router.use(
-  cors({
-    credentials: true,
-    origin: process.env.CLIENT_URL || 3000,
-  })
-);
+// router.use(
+//   cors({
+//     credentials: true,
+//     origin: process.env.CLIENT_URL || 3000,
+//   })
+// );
 router.use(validateToken);
 router.route("/").get(getProjects).post(createProject);
 router.route("/:id").get(getProject).put(updateProject).delete(deleteProject);
