@@ -54,7 +54,9 @@ const loginUser = asyncHandler(async (req, res) => {
       { expiresIn: "15m" }
     );
     // res.status(200).json({ accessToken });
-    res.cookie("token", accessToken, { sameSite: "none" }).json(user);
+    res
+      .cookie("token", accessToken, { sameSite: "none", secure: true })
+      .json(user);
   } else {
     res.status(401);
     throw new Error("email or password is not valid");
