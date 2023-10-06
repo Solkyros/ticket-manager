@@ -11,12 +11,12 @@ const {
 // const cors = require("cors");
 const validateToken = require("../middleware/validate-token-handler");
 // const port = process.env.PORT || 3001;
-// router.use(
-//   cors({
-//     credentials: true,
-//     origin: port,
-//   })
-// );
+router.use(
+  cors({
+    credentials: true,
+    origin: process.env.CLIENT_URL || 3000,
+  })
+);
 router.use(validateToken);
 router.route("/").get(getTickets).post(createTicket);
 router.route("/project/:id").get(getProjectTickets);
