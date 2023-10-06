@@ -7,7 +7,7 @@ const {
   allUsers
 } = require("../controllers/user-controller");
 // const cors = require("cors");
-const validateToken = require("../../middleware/validate-token-handler");
+const validateToken = require("../middleware/validate-token-handler");
 
 const router = express.Router();
 // const port = process.env.PORT || 3001;
