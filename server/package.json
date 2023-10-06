@@ -2,11 +2,11 @@
   "name": "tickets-backend",
   "version": "1.0.0",
   "description": "Express backend api for ticket manager application",
-  "main": "index.js",
+  "main": "./api/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node ./api/index.js",
+    "dev": "nodemon ./api/index.js"
   },
   "author": "Solkyros",
   "license": "MIT",
