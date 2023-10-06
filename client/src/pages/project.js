@@ -108,7 +108,7 @@ export default function Project(props) {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, description, color } = projectData;
+    const { name, description } = projectData;
     if (!right.length) {
       toast.error("At least one user must be selected");
       return;
@@ -116,14 +116,15 @@ export default function Project(props) {
     try {
       const emails = right;
       if (mode === "Add") {
-        const randomColor = getRandomColor();
+        const color = getRandomColor();
         await api.post("/api/projects", {
           name,
           description,
           emails,
-          randomColor,
+          color,
         });
       } else {
+        const { color } = projectData;
         await api.put(`/api/projects/${projectId}`, {
           name,
           description,
