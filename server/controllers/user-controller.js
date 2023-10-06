@@ -54,7 +54,7 @@ const loginUser = asyncHandler(async (req, res) => {
       { expiresIn: "15m" }
     );
     // res.status(200).json({ accessToken });
-    res.cookie("token", accessToken).json(user);
+    res.cookie("token", accessToken, { sameSite: "none" }).json(user);
   } else {
     res.status(401);
     throw new Error("email or password is not valid");
@@ -77,7 +77,7 @@ const logout = asyncHandler(async (req, res) => {
 //@desc Get all users
 //@route GET /api/users
 const allUsers = asyncHandler(async (req, res) => {
-  const users = await User.find({}, 'email');
+  const users = await User.find({}, "email");
   res.status(200).json(users);
 });
 module.exports = { registerUser, loginUser, currentUser, logout, allUsers };
